@@ -1,0 +1,45 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="sample-polymer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello {{name}}!</h2>
+    <paper-input always-float-label label="Name" value="{{name}}"></paper-input>
+  </template>
+
+  <script>
+    /**
+     * `sample-polymer`
+     * sample
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SamplePolymer extends Polymer.Element {
+      static get is() { return 'sample-polymer'; }
+      static get properties() {
+        return {
+          //I'm defining properties to be used on html tags in other notified components
+          name: {
+            type: String,
+            //you must have notify to get it to talk to the other component
+            notify: true
+          },
+          prop1: {
+            type: String,
+            value: 'sample-polymer',
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SamplePolymer.is, SamplePolymer);
+  </script>
+</dom-module>

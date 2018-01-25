@@ -1,0 +1,55 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="button-element.html">
+<link rel="import" href="lite-signal.html">
+
+
+<dom-module id="sample-app">
+  <template>
+    <!--"name" got its name from the get properties function of the child component -->
+  <sample-polymer name="{{parentComponentName}}"></sample-polymer>
+  {{changedString}}
+  <button-element></button-element>
+  <br/>
+  <lite-signal on-lite-signal-mysignal="_listenFunc">[[data]]</lite-signal>
+  </template>
+
+  <script>
+    /**
+     * `sample-polymer`
+     * sample
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SampleApp extends Polymer.Element {
+      static get is() { return 'sample-app'; 
+      }
+      static get properties() {
+          return {
+            parentComponentName: String,
+            changedString: {
+              type: String,
+              //calculates a change in the variable
+              computed: '_changeString(parentComponentName)'
+            }
+          }
+      }
+      //now maybe I can mutate the string down here...
+      _changeString(parentComponentName) {
+        //the results of the return statement is called 'changedString' as set above
+        return parentComponentName.toString() + ' changes now!';
+      }
+      //I'm trying to figure out how to get a button click to set off this 
+      //event but am not successful yet
+      _listenFunc() {
+        //this gives a String value to data which can be put anywhere on the page now 
+        //by using double brackets
+        this.data = "BAM";
+      }
+    }
+
+    window.customElements.define(SampleApp.is, SampleApp);
+  </script>
+</dom-module>

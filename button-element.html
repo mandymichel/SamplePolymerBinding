@@ -1,0 +1,39 @@
+<link rel="import" href="lite-signal.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+
+<dom-module id="button-element">
+    <template>
+      <style>
+        :host {
+          display: block;
+        }
+      </style>
+      <!--needing double brackets on the onclick function is apparently new in P2 -->
+      <paper-button raised class="indigo" onclick="[[_handleClick]]">raised</paper-button>
+    </template>
+  
+    <script>
+      /**
+       * `sample-polymer`
+       * sample
+       *
+       * @customElement
+       * @polymer
+       * @demo demo/index.html
+       */
+      class ButtonElement extends Polymer.Element {
+        static get is() { return 'button-element'; }
+        
+        //I'm trying to figure out how to get a button click to set off this 
+      //method but am not successful yet
+        _handleClick() {
+          console.log("Reached _handleClick() function");
+          this.fire('lite-signal', {name: 'mysignal', data: 'happy'});
+      }
+      }
+      
+
+      window.customElements.define(ButtonElement.is, ButtonElement);
+    </script>
+  </dom-module>
+  

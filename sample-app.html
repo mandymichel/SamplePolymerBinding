@@ -11,7 +11,7 @@
   {{changedString}}
   <button-element></button-element>
   <br/>
-  <lite-signal on-lite-signal-mysignal="_listenFunc">[[data]]</lite-signal>
+  <lite-signal on-lite-signal-mysignal="_listenFunc">[[data]] in a different component!</lite-signal>
   </template>
 
   <script>
@@ -39,10 +39,8 @@
       //now maybe I can mutate the string down here...
       _changeString(parentComponentName) {
         //the results of the return statement is called 'changedString' as set above
-        return parentComponentName.toString() + ' changes now!';
+        return parentComponentName.toString() + ' in a different web component!';
       }
-      //I'm trying to figure out how to get a button click to set off this 
-      //event but am not successful yet
       _listenFunc() {
         //this gives a String value to data which can be put anywhere on the page now 
         //by using double brackets

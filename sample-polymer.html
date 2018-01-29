@@ -1,5 +1,6 @@
 <link rel="import" href="bower_components/polymer/polymer-element.html">
 <link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="bower_components/iron-form/iron-form.html">
 
 
 <dom-module id="sample-polymer">
@@ -9,8 +10,8 @@
         display: block;
       }
     </style>
-    <h2>Hello {{name}}!</h2>
-    <paper-input always-float-label label="Name" value="{{name}}"></paper-input>
+    <h2>Hello {{name}}! Same web component as name input field</h2>
+    <paper-input always-float-label label="Name(for the sake of data binding)" value="{{name}}"></paper-input>
   </template>
 
   <script>
@@ -39,7 +40,6 @@
         };
       }
     }
-
     window.customElements.define(SamplePolymer.is, SamplePolymer);
   </script>
 </dom-module>

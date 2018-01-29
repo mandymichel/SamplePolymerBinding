@@ -1,0 +1,75 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="bower_components/iron-form/iron-form.html">
+<link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+
+<!--Form doesn't work for getting data out of inputs. Fix it.-->
+
+<dom-module id="my-form">
+    <template>
+        <iron-form id="pizzaOrder">
+            <form method="get" action="/form/handler">
+                Topping?
+                <input type="text" name="favoritePizza" value="{{favoritePizza}}">
+                <br> Extra cheese?
+                <input type="checkbox" name="cheese" checked>
+                <br> Size?
+                <form>
+                    <input type="radio" name="size" value="small"> Small
+                    <br>
+                    <input type="radio" name="size" value="medium"> Medium
+                    <br>
+                    <input type="radio" name="size" value="large" checked> Large
+                </form>
+                <br>
+                <paper-checkbox name="delivery" value="yes" checked></paper-checkbox>
+                <!--When you click, 'this.' is added to what you put in onclick-->
+                <paper-button raised on-click="submitForm">Submit</paper-button>
+                <h4>Your pizza is as follows:</h4>
+                <div class="output">[[favoritePizza]]</div>
+            </form>
+        </iron-form>
+    </template>
+    <script>
+        /**
+         * `sample-polymer`
+         * sample
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class MyForm extends Polymer.Element {
+            static get is() { return 'my-form'; }
+            static get properties() {
+                return {
+                        favoritePizza: {
+                            type: String,
+                            //you must have notify to get it to talk to the other component
+                            notify: true
+                        },
+                        cheese: {
+                            type: Boolean,
+                            notify: true
+                        },
+                        size: {
+                            type: String,
+                            notify: true
+                        },
+                        delivery: {
+                            type: Boolean,
+                            notify: true
+                        }
+                };
+            }
+            submitForm() {
+            console.log("Form submitted");
+            console.log(this.$.pizzaOrder);
+            var pOrder = document.getElementById('pizzaOrder');
+            console.log(pOrder);
+        }
+        }
+     
+        window.customElements.define(MyForm.is, MyForm);
+    </script>
+</dom-module>

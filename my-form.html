@@ -2,35 +2,37 @@
 <link rel="import" href="bower_components/paper-input/paper-input.html">
 <link rel="import" href="bower_components/iron-form/iron-form.html">
 <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
 
 <!--Form doesn't work for getting data out of inputs. Fix it.-->
 
 <dom-module id="my-form">
     <template>
         <iron-form id="pizzaOrder">
-            <form method="get" action="/form/handler">
+            <form>
                 Topping?
-                <input type="text" name="favoritePizza" value="{{favoritePizza}}">
+                <input type="text" id="favoritePizza" name="favoritePizza" value="{{favoritePizza}}" required></input>
                 <br> Extra cheese?
-                <input type="checkbox" name="cheese" checked>
+                <input type="checkbox" id="cheese" name="cheese" value="cheese" checked></input>
                 <br> Size?
-                <form>
-                    <input type="radio" name="size" value="small"> Small
+                    <input type="radio" id="small" name="size" value="small"> Small </input>
                     <br>
-                    <input type="radio" name="size" value="medium"> Medium
+                    <input type="radio" id="medium" name="size" value="medium"> Medium </input>
                     <br>
-                    <input type="radio" name="size" value="large" checked> Large
-                </form>
+                    <input type="radio" id="large" name="size" value="large" checked> Large </input>
                 <br>
-                <paper-checkbox name="delivery" value="yes" checked></paper-checkbox>
-                <!--When you click, 'this.' is added to what you put in onclick-->
-                <paper-button raised on-click="submitForm">Submit</paper-button>
-                <h4>Your pizza is as follows:</h4>
-                <div class="output">[[favoritePizza]]</div>
+                Delivery <paper-checkbox id="delivery" name="delivery" checked></paper-checkbox>
+                <!--When you click, 'this.' is added to what you set equal to on-click-->
+                <paper-button raised on-click="_submitForm">Submit</paper-button>
             </form>
         </iron-form>
+        <h4>Your pizza is as follows:</h4>
+        <div id="output" class="output">{{favoritePizza}}</div>
     </template>
     <script>
+        this.$.pizzaOrder.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+        });
         /**
          * `sample-polymer`
          * sample
@@ -43,33 +45,37 @@
             static get is() { return 'my-form'; }
             static get properties() {
                 return {
-                        favoritePizza: {
-                            type: String,
-                            //you must have notify to get it to talk to the other component
-                            notify: true
-                        },
-                        cheese: {
-                            type: Boolean,
-                            notify: true
-                        },
-                        size: {
-                            type: String,
-                            notify: true
-                        },
-                        delivery: {
-                            type: Boolean,
-                            notify: true
-                        }
+                    favoritePizza: {
+                        type: String,
+                        //you must have notify to get it to talk to the other components
+                        notify: true
+                    },
+                    cheese: {
+                        type: Boolean,
+                        notify: true
+                    },
+                    size: {
+                        type: String,
+                        notify: true
+                    },
+                    delivery: {
+                        type: Boolean,
+                        notify: true
+                    },
+                    response: {
+                        type: Object
+                    }
                 };
             }
-            submitForm() {
-            console.log("Form submitted");
-            console.log(this.$.pizzaOrder);
-            var pOrder = document.getElementById('pizzaOrder');
-            console.log(pOrder);
+            _handleInput(event) {
+            }
+            _submitForm(event) {
+                
+                console.log("Form submitted");
+                console.log(this.$.pizzaOrder.serializeForm().toString());
+                //document.getElementById("output").innerHTML = this.$.pizzaOrder.serializeForm().favoritePizza;
+            }
         }
-        }
-     
         window.customElements.define(MyForm.is, MyForm);
     </script>
 </dom-module>
